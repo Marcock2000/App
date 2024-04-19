@@ -8,6 +8,11 @@ import { SignInSignUpScreen } from "./screens/signin";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { tokenCache } from "./utils/cache";
 import Constants from "expo-constants";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { CreateListingScreen } from "./screens/createListing";
+
+const Stack = createStackNavigator();
 
 export const App = () => {
   return (
@@ -15,17 +20,20 @@ export const App = () => {
       publishableKey={Constants.expoConfig?.extra?.CLERK_PUBLISHABLE_KEY}
       tokenCache={tokenCache}
     >
-      <SignedIn>
-        <TRPCProvider>
-          <SafeAreaProvider>
-            <HomeScreen />
+      <NavigationContainer>
+        <SignedIn>
+          <TRPCProvider>
+            <Stack.Navigator>
+              <Stack.Screen name="GrayHouse" component={HomeScreen} />
+              <Stack.Screen name="CreateListing" component={CreateListingScreen} />
+            </Stack.Navigator>
             <StatusBar />
-          </SafeAreaProvider>
-        </TRPCProvider>
-      </SignedIn>
-      <SignedOut>
-        <SignInSignUpScreen />
-      </SignedOut>
+          </TRPCProvider>
+        </SignedIn>
+        <SignedOut>
+          <SignInSignUpScreen />
+        </SignedOut>
+      </NavigationContainer>
     </ClerkProvider>
   );
 };

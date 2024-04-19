@@ -1,12 +1,12 @@
 import { useOAuth } from "@clerk/clerk-expo";
 import React from "react";
-import { Button, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
 const SignInWithOAuth = () => {
   useWarmUpBrowser();
 
-  const { startOAuthFlow } = useOAuth({ strategy: "oauth_discord" });
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const handleSignInWithDiscordPress = React.useCallback(async () => {
     try {
@@ -26,12 +26,10 @@ const SignInWithOAuth = () => {
   }, []);
 
   return (
-    <View className="rounded-lg border-2 border-gray-500 p-4">
-      <Button
-        title="Sign in with Discord"
-        onPress={handleSignInWithDiscordPress}
-      />
-    </View>
+    <Pressable onPress={handleSignInWithDiscordPress}  className="flex rounded-xl border-2 border-gray-500 p-4 text-white">
+      <Text className=" text-white"> Sign-in with Google</Text>
+
+    </Pressable>
   );
 }
 
